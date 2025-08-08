@@ -131,6 +131,7 @@ The following steps can be done in the WSL Ubuntu terminal if you are using a Wi
 2. **Run the startup script**
 
    ```bash
+   chmod +x start.sh
    ./start.sh
    ```
 
