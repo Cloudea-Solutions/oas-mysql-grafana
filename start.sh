@@ -12,10 +12,6 @@ echo "📄 Generating MySQL init script..."
 mkdir -p mysql/init
 envsubst < templates/init-users.sql.tpl > mysql/init/init-users.sql
 
-echo "📄 Generating Grafana datasource provisioning..."
-mkdir -p grafana/provisioning/datasources
-envsubst < templates/mysql.yml.tpl > grafana/provisioning/datasources/mysql.yml
-
 echo "📄 Generating OAS account provisioning..."
 mkdir -p scripts
 envsubst < templates/admin-create.expect.tpl > scripts/admin-create.expect

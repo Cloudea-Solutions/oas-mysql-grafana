@@ -9,11 +9,11 @@ services:
       - oas-sf:/oas/StoreAndForward
       - oas-uiengine:/oas/webapps/uiengine/media
     ports:
-      - "58727:58727"
-      - "58737:58737"
       - "58725:58725"
-      - "1883:1883"
+      - "58727:58727"
       - "58728:58728"
+      - "58737:58737"
+      - "1883:1883"
     restart: unless-stopped
 
   mysql:
@@ -39,7 +39,6 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
       
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
