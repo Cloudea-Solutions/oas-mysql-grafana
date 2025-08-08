@@ -1,0 +1,30 @@
+# Node / editor / OS files
+.DS_Store
+Thumbs.db
+*.log
+
+# Environment variables
+.env
+
+# Generated MySQL and Grafana config
+mysql/init/init-users.sql
+grafana/provisioning/datasources/mysql.yml
+scripts/admin-create.expect
+
+# Docker volumes (if stored locally)
+mysql-data/
+grafana-storage/
+oas-logs/
+oas-config/
+oas-opcua/
+oas-sf/
+oas-uiengine/
+
+# Ignore backup/swap/temp files
+*~
+*.swp
+*.bak
+*.tmp
+
+# VSCode project settings
+.vscode/

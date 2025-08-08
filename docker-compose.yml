@@ -1,0 +1,65 @@
+services:
+  oas:
+    image: oasiot/oas-linux:20.00.0146
+    container_name: oas
+    volumes:
+      - oas-logs:/oas/Log
+      - oas-config:/oas/ConfigFiles
+      - oas-opcua:/oas/OPCUA
+      - oas-sf:/oas/StoreAndForward
+      - oas-uiengine:/oas/webapps/uiengine/media
+    ports:
+      - "58727:58727"
+      - "58737:58737"
+      - "58725:58725"
+      - "1883:1883"
+      - "58728:58728"
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  grafana:
+    image: grafana/grafana-enterprise:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=${MYSQL_ROOT_USER:-root}
+      - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    depends_on:
+      - mysql
+
+volumes:
+  oas-logs:
+  oas-config:
+  oas-opcua:
+  oas-sf:
+  oas-uiengine:
+  mysql-data:
+  grafana-storage:
